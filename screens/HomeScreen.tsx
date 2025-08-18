@@ -196,6 +196,69 @@ const HomeScreen = () => {
               );
             })}
           </ScrollView>
+
+          <View className="flex-row flex-wrap justify-between items-center px-4 mt-6">
+            {features?.map((feature, idx) => (
+              <Pressable
+                style={{
+                  backgroundColor: ["#FFF1F2", "#EFF6FF", "#F0FFF4", "#FFFBEB"][
+                    idx % 4
+                  ],
+                  elevation: 3,
+                }}
+                className="w-[48%] h-36 mb-4 rounded-lg overflow-hidden"
+              >
+                <View className="p-3">
+                  <Text className="text-xl font-semibold text-gray-800">
+                    {feature.title}
+                  </Text>
+                  <Text className="text-gray-500">
+                    {idx === 0
+                      ? "Try outfit Virtually"
+                      : idx == 1
+                        ? "AI create new Looks"
+                        : idx == 2
+                          ? "Instatnt try on"
+                          : "Find best colors"}
+                  </Text>
+                </View>
+                <Image
+                  style={{ transform: [{ rotate: "12deg" }], opacity: 0.9 }}
+                  className="w-20 h-20 absolute bottom-[-3] right-[-1] rounded-lg"
+                  source={{ uri: feature.image }}
+                />
+              </Pressable>
+            ))}
+          </View>
+
+          <View className="flex-row justify-between items-center p-4 mt-3">
+            <Text className="font-semibold text-xl">Popular this week</Text>
+            <Text className="text-gray-500">More</Text>
+          </View>
+
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            className="mr-3 pl-4"
+          >
+            {popularItems?.map((item, idx) => (
+              <View className="w-36 mr-4">
+                <Image
+                  className="h-44 w-36 rounded-lg"
+                  source={{ uri: item.image }}
+                />
+
+                <View className="flex-row items-center">
+                  <Image
+                    className="w-6 h-6 rounded-full mr-3"
+                    source={{ uri: item.profile }}
+                  />
+                  <Text className="text-sm font-medium">{item.username}</Text>
+                </View>
+                <Text className="text-sm mt-1">{item.itemName}</Text>
+              </View>
+            ))}
+          </ScrollView>
         </ScrollView>
       </SafeAreaView>
     </>
