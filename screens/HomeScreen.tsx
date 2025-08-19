@@ -91,7 +91,7 @@ const initialStories = [
   },
 ];
 const HomeScreen = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const [savedOutfits, setSavedOutFits] = useState([]);
   const [stories, setStories] = useState(initialStories);
   const [showStory, setStory] = useState(false);
@@ -182,6 +182,12 @@ const HomeScreen = () => {
               return (
                 <View className="mr-3" key={idx}>
                   <Pressable
+                    onPress={() => {
+                      navigation.navigate("AddOutfit", {
+                        date: day.label,
+                        savedOutfits,
+                      });
+                    }}
                     className={`w-24 h-40 items-center rounded-lg justify-center overflow-hidden shadow-md ${outfit ? "bg-white" : "bg-gray-50"}`}
                   >
                     {!outfit && (
@@ -192,6 +198,9 @@ const HomeScreen = () => {
 
                     {outfit && <View></View>}
                   </Pressable>
+                  <Text className="text-sm text-center text-gray-800">
+                    {day.label}
+                  </Text>
                 </View>
               );
             })}
@@ -200,6 +209,7 @@ const HomeScreen = () => {
           <View className="flex-row flex-wrap justify-between items-center px-4 mt-6">
             {features?.map((feature, idx) => (
               <Pressable
+                key={idx}
                 style={{
                   backgroundColor: ["#FFF1F2", "#EFF6FF", "#F0FFF4", "#FFFBEB"][
                     idx % 4
