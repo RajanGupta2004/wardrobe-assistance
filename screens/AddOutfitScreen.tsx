@@ -10,12 +10,13 @@ import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { mpants, mshirts, pants, shoes, skirts, tops } from "../data";
 import { Ionicons } from "@expo/vector-icons";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 const AddOutfitScreen = () => {
   const route = useRoute<any>();
   const { date, savedOutfits } = route?.params;
   const [selected, setSelected] = useState<number[]>([]);
+  const navigation = useNavigation<any>();
   console.log("route", route);
   const popularClothes = [
     ...pants,
@@ -36,10 +37,21 @@ const AddOutfitScreen = () => {
       prev.includes(id) ? selected.filter((item) => item !== id) : [...prev, id]
     );
   };
+
+  const handleNext = () => {
+    const selectedItem = popularClothes.filter((item) =>
+      selected.includes(item.id)
+    );
+    navigation.navigate("DesignRoom", {
+      selectedItem,
+      date,
+      savedOutfits,
+    });
+  };
   return (
     <SafeAreaView className="flex-1 bg-white py-3">
       <View className="flex-row items-center px-4 justify-between">
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.goBack()}>
           <Ionicons name="chevron-back" size={28} color="black" />
         </TouchableOpacity>
         <Text className="font-semibold text-xl">Add outfit</Text>
@@ -114,7 +126,10 @@ const AddOutfitScreen = () => {
             })}
           </ScrollView>
 
-          <TouchableOpacity className="bg-black py-3 w-24 my-2 mr-3   items-center rounded-lg self-end">
+          <TouchableOpacity
+            onPress={handleNext}
+            className="bg-black py-3 w-24 my-2 mr-3   items-center rounded-lg self-end"
+          >
             <Text className="text-white ">Next</Text>
           </TouchableOpacity>
         </View>
