@@ -5,6 +5,7 @@ import TabNavigator from "./TabNavigator";
 import AddOutfitScreen from "../screens/AddOutfitScreen";
 import { RootStackParamList } from "../types";
 import DesignRoomScreen from "../screens/DesignRoomScreen";
+import NewOutfitScreen from "../screens/NewOutfitScreen";
 
 const RootNavigator = () => {
   const Stack = createNativeStackNavigator();
@@ -13,6 +14,7 @@ const RootNavigator = () => {
       <Stack.Screen name="Tab" component={TabNavigator} />
       <Stack.Screen name="AddOutfit" component={AddOutfitScreen} />
       <Stack.Screen name="DesignRoom" component={DesignRoomScreen} />
+      <Stack.Screen name="NewOutfit" component={NewOutfitScreen} />
     </Stack.Navigator>
   );
 };

@@ -1,13 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import Draggable from "react-native-draggable";
 
 const DesignRoomScreen = () => {
   const route = useRoute<any>();
   const { savedOutfits, date, selectedItem } = route?.params;
-
+  const navigation = useNavigation<any>();
   const [cloths, setCloths] = useState<any[]>([]);
 
   useEffect(() => {
@@ -34,13 +34,22 @@ const DesignRoomScreen = () => {
       {/* Header */}
       <View className="flex-row items-center justify-between px-4 py-3">
         <Text className="text-white">{date}</Text>
-        <TouchableOpacity className="px-3 py-2 bg-gray-400 rounded">
+        <TouchableOpacity
+          onPress={() =>
+            navigation.navigate("NewOutfit", {
+              selectedItem,
+              date,
+              savedOutfits,
+            })
+          }
+          className="px-3 py-2 bg-gray-400 rounded"
+        >
           <Text className="text-white">Next</Text>
         </TouchableOpacity>
       </View>
 
       {/* Design Room */}
-      <View style={styles.room}>
+      <View className="flex-1 justify-center items-center">
         {cloths?.map((item) => (
           <Draggable
             key={item.id}
@@ -63,6 +72,18 @@ const DesignRoomScreen = () => {
             />
           </Draggable>
         ))}
+      </View>
+
+      <View className="flex-row justify-around items-center">
+        <TouchableOpacity className="bg-gray-400 rounded p-3">
+          <Text className="text-white">Add clothes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity className="bg-gray-400 rounded p-3">
+          <Text className="text-white">Add clothes</Text>
+        </TouchableOpacity>
+        <TouchableOpacity className="bg-gray-400 rounded p-3">
+          <Text className="text-white">Add clothes</Text>
+        </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
